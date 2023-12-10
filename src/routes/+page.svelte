@@ -2,6 +2,10 @@
 	import { base } from '$app/paths'
 	import * as config from '$lib/config'
 	import Lingker from '../../public/lingker.svg?dataurl'
+
+	export let data
+	$: ({ nodes } = data)
+	//$: console.log(nodes)
 </script>
 
 <section class="home-section">
@@ -45,6 +49,20 @@
 			<h1 class="category-title">recent blog</h1>
 		</div>
 		<div class="container-card">
+			<!-- github-cms -->
+			{#each nodes as { title, number, slug }}
+				<div class="card-blog">
+					<div class="max-w-lg">
+						<a href="{base}/blog/{slug}-{number}" class=" text-2xl font-semibold leading-relaxed"
+							>{title}</a
+						>
+						<p class=" text-gray-300">
+							{number}
+						</p>
+					</div>
+				</div>
+			{/each}
+			<!-- github-cms -->
 			<!-- post -->
 			<div class="card-blog">
 				<div class="">
