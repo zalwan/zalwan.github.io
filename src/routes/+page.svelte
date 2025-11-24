@@ -1,3 +1,19 @@
-<section class="flex min-h-screen flex-col items-center justify-center bg-black">
-	<h1 class=" text-7xl font-semibold text-white">Hello World</h1>
-</section>
+<script lang="ts">
+	import { Footer, Header, Hero, MainWrapper, ThemeProvider } from '$lib';
+</script>
+
+<svelte:head>
+	<title>Zalwan Studio</title>
+</svelte:head>
+
+<ThemeProvider>
+	<MainWrapper>
+		<div class="grid min-h-screen grid-rows-[auto_1fr_auto] gap-10">
+			<Header />
+			<main>
+				<Hero />
+			</main>
+			<Footer />
+		</div>
+	</MainWrapper>
+</ThemeProvider>
