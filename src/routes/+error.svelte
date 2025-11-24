@@ -3,10 +3,24 @@
 	export let error: Error;
 
 	const title = status === 404 ? 'Page not found' : 'Something went wrong';
+	const description =
+		status === 404
+			? 'The page you are looking for does not exist. Head back home or reach out.'
+			: 'An unexpected error occurred. Please try again or contact support.';
+	const siteUrl = 'https://zalwan.github.io';
 </script>
 
 <svelte:head>
 	<title>{status} | {title}</title>
+	<meta name="description" content={description} />
+	<meta property="og:title" content={`${status} | ${title}`} />
+	<meta property="og:description" content={description} />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${status} | ${title}`} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
 <section class="flex flex-col items-center justify-center gap-6 py-16 text-center">
