@@ -5,7 +5,7 @@ export const profileData = {
 	description:
 		'Passionate about mobile development, cloud computing, AI, and open-source. Also into Linux, custom PCs, and exploring the latest tech innovations.',
 	image: {
-		src: '/img/hero-img.png',
+		src: '/img/hero-img.webp',
 		alt: 'Rizal Suryawan portrait'
 	}
 };
