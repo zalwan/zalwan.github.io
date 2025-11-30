@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { ArrowUpRight } from '@lucide/svelte';
 	import data from '$lib/data';
 
 	const { navItems } = data.navbar;
@@ -34,8 +35,9 @@
 		{/each}
 	</nav>
 	<button
-		class="rounded-full border border-amber-300/50 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/20"
+		class="inline-flex items-center gap-2 rounded-full border border-amber-300/50 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/20"
 	>
 		Start a project
+		<ArrowUpRight class="h-4 w-4" aria-hidden="true" />
 	</button>
 </header>
