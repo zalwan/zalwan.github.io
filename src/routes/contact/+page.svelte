@@ -1,7 +1,54 @@
 <script lang="ts">
+	import { data } from '$lib';
+	import {
+		Mail,
+		Phone,
+		MapPin,
+		Globe,
+		Linkedin,
+		MessageCircle,
+		ArrowUpRight
+	} from '@lucide/svelte';
+
 	const siteUrl = 'https://zalwan.github.io';
 	const pageTitle = 'Contact | Zalwan Studio';
-	const pageDescription = 'Get in touch with Rizal Suryawan for collaborations or project inquiries.';
+	const pageDescription =
+		'Get in touch with Rizal Suryawan for collaborations or project inquiries.';
+
+	const { basics } = data.resume;
+
+	const contactItems = [
+		{
+			icon: Mail,
+			label: 'Email',
+			value: basics.email,
+			href: `mailto:${basics.email}`
+		},
+		{
+			icon: Phone,
+			label: 'Phone',
+			value: basics.phone,
+			href: `https://wa.me/${basics.phone.replace(/\+/g, '')}`
+		},
+		{
+			icon: MapPin,
+			label: 'Location',
+			value: basics.location,
+			href: ''
+		},
+		{
+			icon: Globe,
+			label: 'Website',
+			value: basics.website.replace('https://', ''),
+			href: basics.website
+		},
+		{
+			icon: Linkedin,
+			label: 'LinkedIn',
+			value: 'rizal-suryawan',
+			href: basics.linkedin
+		}
+	];
 </script>
 
 <svelte:head>
@@ -17,12 +64,60 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<section class="flex flex-col items-center justify-center gap-4 py-24 text-center">
-	<p class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-		Contact
-	</p>
-	<h1 class="text-4xl font-semibold text-white md:text-5xl">Let’s talk</h1>
-	<p class="max-w-xl text-base text-white/60 md:text-lg">
-		Reach me any time at <a class="text-amber-300 underline" href="mailto:hello@zalwan.studio">hello@zalwan.studio</a>.
-	</p>
-</section>
+<div class="py-12">
+	<div class="mb-12 text-center">
+		<p
+			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
+		>
+			Contact
+		</p>
+		<h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">Let's Connect</h1>
+		<p class="mx-auto max-w-2xl text-lg text-white/60">
+			Feel free to reach out for collaborations, project inquiries, or just to say hello.
+		</p>
+	</div>
+
+	<div class="mx-auto max-w-2xl space-y-4">
+		{#each contactItems as item}
+			{@const isLink = !!item.href}
+			{@const Tag = isLink ? 'a' : 'div'}
+			<svelte:element
+				this={Tag}
+				href={isLink ? item.href : undefined}
+				target={isLink ? '_blank' : undefined}
+				rel={isLink ? 'noreferrer' : undefined}
+				class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
+			>
+				<div
+					class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
+				>
+					<svelte:component this={item.icon} class="h-5 w-5" />
+				</div>
+				<div class="min-w-0 flex-1">
+					<p class="text-xs font-medium uppercase tracking-wider text-white/40">{item.label}</p>
+					<p class="truncate text-sm font-semibold text-white group-hover:text-amber-300 transition">
+						{item.value}
+					</p>
+				</div>
+				{#if isLink}
+					<ArrowUpRight
+						class="h-4 w-4 shrink-0 text-white/30 transition group-hover:text-amber-400"
+					/>
+				{/if}
+			</svelte:element>
+		{/each}
+	</div>
+
+	<!-- CTA -->
+	<div class="mt-12 text-center">
+		<a
+			class="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-8 py-4 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/20 hover:border-amber-400/60"
+			href="https://wa.me/{basics.phone.replace(/\+/g, '')}?text=Hi%20Rizal,%20I%20found%20your%20web%20and%20would%20like%20to%20connect!"
+			target="_blank"
+			rel="noreferrer"
+		>
+			<MessageCircle class="h-4 w-4" />
+			Chat on WhatsApp
+		</a>
+	</div>
+</div>
