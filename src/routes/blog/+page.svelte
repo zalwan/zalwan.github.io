@@ -1,7 +1,12 @@
 <script lang="ts">
+	import { BlogCard } from '$lib';
+
 	const siteUrl = 'https://zalwan.github.io';
 	const pageTitle = 'Blog | Zalwan Studio';
-	const pageDescription = 'Notes, stories, and updates from the studio.';
+	const pageDescription =
+		'Notes, stories, and insights on AI, mobile development, and engineering career growth.';
+
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -17,10 +22,26 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<section class="flex flex-col items-center justify-center gap-4 py-24 text-center">
-	<p class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-		Blog
-	</p>
-	<h1 class="text-4xl font-semibold text-white md:text-5xl">Articles are coming soon</h1>
-	<p class="max-w-xl text-base text-white/60 md:text-lg">I’m curating stories, ideas, and notes. Check back shortly.</p>
-</section>
+<div class="py-12">
+	<div class="mb-12 text-center">
+		<p
+			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
+		>
+			Blog
+		</p>
+		<h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">Articles</h1>
+		<p class="mx-auto max-w-2xl text-lg text-white/60">
+			Notes, stories, and insights on AI, mobile development, and engineering career growth.
+		</p>
+	</div>
+
+	{#if data.posts.length > 0}
+		<div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+			{#each data.posts as post}
+				<BlogCard {post} />
+			{/each}
+		</div>
+	{:else}
+		<p class="text-center text-white/50">No articles yet. Check back soon.</p>
+	{/if}
+</div>

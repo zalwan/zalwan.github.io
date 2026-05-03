@@ -1,0 +1,83 @@
+---
+title: "From Frontend to Principal Engineer: Lessons from Scaling Remotely"
+slug: "frontend-to-principal-engineer"
+description: "Reflections on growing from a frontend engineer to a principal engineer in a remote, async-first team, and the skills that mattered most."
+date: "2026-02-10"
+tags: ["Career", "Engineering", "Remote Work", "Leadership"]
+published: true
+---
+
+In less than a year, I went from Frontend Engineer to Principal Engineer at CHANGEMAKR ASIA — a fully remote, async-first company based in Singapore. Here's what that journey taught me.
+
+## The Path
+
+```
+May 2025    → Frontend Engineer
+August 2025 → Full Stack Engineer
+February 2026 → Principal Engineer
+```
+
+Each transition wasn't just a title change. It required a fundamental shift in how I thought about my work.
+
+## Lesson 1: Own the Problem, Not Just the Code
+
+As a frontend engineer, I focused on building pixel-perfect interfaces. The shift happened when I started asking **why** before **how**.
+
+Instead of: *"How do I build this component?"*
+
+I asked: *"Why does the user need this? What problem are we solving?"*
+
+This mindset change made me a better collaborator and led to better technical decisions.
+
+## Lesson 2: Async Communication is a Superpower
+
+In a remote team, your written communication **is** your productivity. I learned to:
+
+- **Write clear PRs** — context, screenshots, and testing steps
+- **Document decisions** — not just what we decided, but why
+- **Over-communicate** — async means no one sees you working; your artifacts speak for you
+
+A well-written RFC saved us weeks of back-and-forth meetings.
+
+## Lesson 3: Full Stack Thinking Unlocks Impact
+
+Moving from frontend to full stack wasn't about learning new frameworks. It was about understanding the **whole system**:
+
+- How does the API contract affect the UI's loading states?
+- How does the database schema impact query performance?
+- How does the deployment pipeline affect feature velocity?
+
+When you see the full picture, you make better decisions at every layer.
+
+## Lesson 4: Lead with Clarity, Not Authority
+
+As a principal engineer, I don't manage people. I:
+
+- **Set technical direction** — choose the right tools and patterns
+- **Unblock others** — create internal tools, write documentation, simplify complexity
+- **Make trade-offs explicit** — "We're choosing X because Y, with the trade-off of Z"
+
+The best technical leadership is when the team feels empowered, not directed.
+
+## Lesson 5: Build for the Team, Not Just the Product
+
+Some of the most impactful work I've done wasn't user-facing:
+
+- Standardizing project structure across repos
+- Creating shared component libraries
+- Writing onboarding docs that reduced ramp-up time from weeks to days
+- Setting up CI/CD pipelines that gave the team confidence to ship
+
+## What I'd Tell My Past Self
+
+1. **Say yes to uncomfortable projects** — they're where growth happens
+2. **Read code more than you write it** — understanding existing systems is a superpower
+3. **Invest in writing skills** — in remote work, writing is your voice
+4. **Build relationships intentionally** — remote doesn't mean isolated
+5. **Stay hands-on** — principals who stop coding lose credibility fast
+
+## Conclusion
+
+The path from frontend to principal isn't about collecting technologies. It's about expanding your circle of concern — from components to systems, from code to people, from features to impact.
+
+If you're on this journey, keep building, keep writing, and keep asking "why."

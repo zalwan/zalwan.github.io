@@ -1,0 +1,85 @@
+---
+title: "Building Intelligent AI Agents with Function Calling"
+slug: "building-ai-agents-function-calling"
+description: "A practical guide to designing AI agents that interact with backend services using OpenAI's function calling, based on real-world LMS platform experience."
+date: "2026-04-28"
+tags: ["AI", "OpenAI", "Function Calling", "LLM"]
+published: true
+---
+
+AI agents are more than chatbots. They can reason, decide, and take action on behalf of users. In this article, I'll share what I learned building AI-powered features for an LMS platform.
+
+## What is Function Calling?
+
+Function calling allows an LLM to request the execution of specific functions in your backend. Instead of just generating text, the model can:
+
+- **Query databases** to fetch user-specific data
+- **Trigger workflows** like enrolling a user in a course
+- **Search content** with intelligent ranking
+
+```typescript
+const tools = [
+  {
+    type: "function",
+    function: {
+      name: "get_course_recommendations",
+      description: "Get personalized course recommendations based on user progress",
+      parameters: {
+        type: "object",
+        properties: {
+          userId: { type: "string", description: "The user ID" },
+          limit: { type: "number", description: "Number of recommendations" }
+        },
+        required: ["userId"]
+      }
+    }
+  }
+];
+```
+
+## Designing Reliable System Prompts
+
+One of the biggest challenges is ensuring the AI agent behaves consistently. Here are patterns that work:
+
+### 1. Role Definition
+
+Be explicit about what the agent should and shouldn't do:
+
+```
+You are a Learning Assistant for BAWANA LMS.
+You MUST only answer questions related to the user's enrolled courses.
+You MUST NOT provide information about courses the user hasn't enrolled in.
+```
+
+### 2. Context Injection
+
+Inject relevant context before each conversation turn:
+
+```typescript
+const systemPrompt = `
+${basePrompt}
+
+Current User: ${user.name}
+Enrolled Courses: ${courses.map(c => c.title).join(', ')}
+Current Progress: ${progress}%
+`;
+```
+
+### 3. Guardrails
+
+Always validate function call arguments before execution and handle edge cases gracefully.
+
+## Lessons Learned
+
+After months of building and iterating:
+
+1. **Start simple** — Begin with one or two functions and expand gradually
+2. **Log everything** — Function call traces are invaluable for debugging
+3. **Test edge cases** — Users will ask things you never imagined
+4. **Monitor token usage** — Context injection adds up fast
+
+## Conclusion
+
+Function calling transforms AI from a text generator into an actionable assistant. The key is thoughtful system design, robust guardrails, and iterative improvement.
+
+Building AI features is as much about engineering discipline as it is about prompt craft.

@@ -1,0 +1,117 @@
+---
+title: "Flutter State Management: Bloc vs Provider in Production"
+slug: "flutter-bloc-vs-provider"
+description: "A hands-on comparison of Bloc and Provider for Flutter state management, with insights from building real mobile applications."
+date: "2026-03-15"
+tags: ["Flutter", "Mobile", "State Management", "Bloc", "Provider"]
+published: true
+---
+
+After shipping multiple Flutter apps — from attendance trackers to AI-powered learning platforms — I've used both Bloc and Provider extensively. Here's what I've learned about when to use each.
+
+## The Quick Answer
+
+- **Provider**: Great for simple to moderate state. Less boilerplate, faster to set up.
+- **Bloc**: Better for complex state flows. More structure, easier to test and debug.
+
+## Provider in Practice
+
+Provider shines when your state logic is straightforward:
+
+```dart
+class AttendanceProvider extends ChangeNotifier {
+  bool _isCheckedIn = false;
+
+  bool get isCheckedIn => _isCheckedIn;
+
+  Future<void> checkIn(String location) async {
+    final result = await _repository.checkIn(location);
+    _isCheckedIn = result.success;
+    notifyListeners();
+  }
+}
+```
+
+Use it in your widget:
+
+```dart
+Consumer<AttendanceProvider>(
+  builder: (context, provider, child) {
+    return ElevatedButton(
+      onPressed: provider.isCheckedIn ? null : () => provider.checkIn(location),
+      child: Text(provider.isCheckedIn ? 'Checked In' : 'Check In'),
+    );
+  },
+)
+```
+
+### When Provider Works Best
+
+- Settings and preferences
+- Simple CRUD operations
+- Small to medium apps
+- Rapid prototyping
+
+## Bloc in Practice
+
+Bloc enforces a clear separation between events, states, and business logic:
+
+```dart
+// Events
+sealed class QuizEvent {}
+class AnswerSubmitted extends QuizEvent {
+  final int questionIndex;
+  final String answer;
+  AnswerSubmitted(this.questionIndex, this.answer);
+}
+
+// States
+sealed class QuizState {}
+class QuizInProgress extends QuizState {
+  final int currentQuestion;
+  final int totalQuestions;
+  QuizInProgress(this.currentQuestion, this.totalQuestions);
+}
+class QuizCompleted extends QuizState {
+  final int score;
+  QuizCompleted(this.score);
+}
+
+// Bloc
+class QuizBloc extends Bloc<QuizEvent, QuizState> {
+  QuizBloc() : super(QuizInProgress(0, 10)) {
+    on<AnswerSubmitted>(_onAnswerSubmitted);
+  }
+
+  void _onAnswerSubmitted(AnswerSubmitted event, Emitter<QuizState> emit) {
+    // Process answer, advance or complete
+  }
+}
+```
+
+### When Bloc Works Best
+
+- Complex state transitions (quiz flows, multi-step forms)
+- Apps requiring thorough testing
+- Large teams needing consistent patterns
+- Features with many interrelated states
+
+## My Rule of Thumb
+
+| Factor | Provider | Bloc |
+|--------|----------|------|
+| Boilerplate | Low | High |
+| Testability | Good | Excellent |
+| Learning curve | Easy | Moderate |
+| Complex flows | Adequate | Excellent |
+| Team scalability | Good | Excellent |
+
+## Real-World Decision
+
+For the **Mobile Attendance App**, I chose Provider — simple check-in/check-out state, minimal complexity.
+
+For the **Quiz Assessment App**, I chose Bloc — multi-step quiz flow with scoring, timers, and result tracking needed clear state transitions.
+
+## Conclusion
+
+Don't pick a state management solution based on popularity. Pick based on your app's actual complexity. Start with Provider, graduate to Bloc when the state logic outgrows `ChangeNotifier`.
