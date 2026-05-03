@@ -1,12 +1,13 @@
+import { summary, basics } from './resume';
+
 export const profileData = {
-	badge: '✨ Software Engineer',
+	badge: `✨ ${basics.headline}`,
 	heading: "Hello! I'm",
-	fullName: 'Rizal Suryawan',
-	description:
-		'Passionate about mobile development, cloud computing, AI, and open-source. Also into Linux, custom PCs, and exploring the latest tech innovations.',
+	fullName: basics.name,
+	description: summary,
 	image: {
 		src: '/img/hero-img.webp',
-		alt: 'Rizal Suryawan portrait'
+		alt: `${basics.name} portrait`
 	}
 };
 
