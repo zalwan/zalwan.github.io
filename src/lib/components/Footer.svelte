@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import data from '$lib/data';
 
 	const currentYear = new Date().getFullYear();
@@ -17,12 +18,12 @@
 >
 	{#if showSocial}
 		<div class="flex flex-wrap items-center gap-3">
-			{#each socialMediaLinks as social}
+			{#each socialMediaLinks as social (social.id)}
 				<a
 					class="rounded-full border border-white/10 px-3 py-1 transition hover:border-amber-300/50 hover:text-white"
 					href={social.url}
 					target="_blank"
-					rel="noreferrer"
+					rel="external noreferrer"
 				>
 					{social.label}
 				</a>
@@ -32,8 +33,8 @@
 
 	{#if showNav}
 		<div class="flex flex-wrap items-center gap-4 text-white/60">
-			{#each navItems.filter((item) => !item.disabled) as item}
-				<a class="transition hover:text-white" href={item.href}>{item.title}</a>
+			{#each navItems.filter((item) => !item.disabled) as item (item.href)}
+				<a class="transition hover:text-white" href={resolve(item.href)}>{item.title}</a>
 			{/each}
 		</div>
 	{/if}

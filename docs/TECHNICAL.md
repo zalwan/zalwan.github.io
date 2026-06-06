@@ -35,54 +35,54 @@ src/lib/data/resume.ts (typed module)
 
 ```typescript
 interface Role {
-  id: string;
-  position: string;
-  period: string;
-  description: string;
+	id: string;
+	position: string;
+	period: string;
+	description: string;
 }
 
 interface Experience {
-  id: string;
-  company: string;
-  position: string;
-  location: string;
-  period: string;
-  website: string;
-  description: string;
-  roles: Role[];       // supports multi-role career progression
+	id: string;
+	company: string;
+	position: string;
+	location: string;
+	period: string;
+	website: string;
+	description: string;
+	roles: Role[]; // supports multi-role career progression
 }
 
 interface Project {
-  id: string;
-  name: string;
-  period: string;
-  website: string;     // empty string if no link
-  description: string;
+	id: string;
+	name: string;
+	period: string;
+	website: string; // empty string if no link
+	description: string;
 }
 
 interface Skill {
-  id: string;
-  name: string;
-  keywords: string[];  // technology/tool tags
+	id: string;
+	name: string;
+	keywords: string[]; // technology/tool tags
 }
 
 interface Language {
-  id: string;
-  language: string;
-  fluency: string;
+	id: string;
+	language: string;
+	fluency: string;
 }
 ```
 
 ### Exported Data
 
-| Export | Type | Used By |
-|--------|------|---------|
-| `summary` | `string` | Hero (via hero.ts), About page |
-| `basics` | `object` | Hero (via hero.ts), Contact page |
-| `experience` | `Experience[]` | About page |
-| `projects` | `Project[]` | Projects page |
-| `skills` | `Skill[]` | About page |
-| `languages` | `Language[]` | About page |
+| Export       | Type           | Used By                          |
+| ------------ | -------------- | -------------------------------- |
+| `summary`    | `string`       | Hero (via hero.ts), About page   |
+| `basics`     | `object`       | Hero (via hero.ts), Contact page |
+| `experience` | `Experience[]` | About page                       |
+| `projects`   | `Project[]`    | Projects page                    |
+| `skills`     | `Skill[]`      | About page                       |
+| `languages`  | `Language[]`   | About page                       |
 
 ### Hero Integration
 
@@ -92,11 +92,11 @@ interface Language {
 import { summary, basics } from './resume';
 
 export const profileData = {
-  badge: `✨ ${basics.headline}`,
-  heading: "Hello! I'm",
-  fullName: basics.name,
-  description: summary,
-  // ...
+	badge: `✨ ${basics.headline}`,
+	heading: "Hello! I'm",
+	fullName: basics.name,
+	description: summary
+	// ...
 };
 ```
 
@@ -133,28 +133,29 @@ Each `.svx` file requires YAML frontmatter:
 
 ```yaml
 ---
-title: "Post Title"
-slug: "post-slug"
-description: "Short description for cards and SEO."
-date: "2026-04-28"
-tags: ["Tag1", "Tag2"]
+title: 'Post Title'
+slug: 'post-slug'
+description: 'Short description for cards and SEO.'
+date: '2026-04-28'
+tags: ['Tag1', 'Tag2']
 published: true
 ---
-
 Your markdown content here. Supports all markdown features:
-- Headings (h2, h3, etc.)
-- Code blocks with syntax highlighting
-- Lists, tables, blockquotes
-- Bold, italic, links
+  - Headings (h2, h3, etc.)
+  - Code blocks with syntax highlighting
+  - Lists, tables, blockquotes
+  - Bold, italic, links
 ```
 
 ### Data Loader API
 
 **`getPosts(): Promise<BlogPost[]>`**
+
 - Returns all published posts sorted by date (newest first)
 - Filters out posts where `published: false`
 
 **`getPost(slug: string): Promise<BlogPostWithContent | undefined>`**
+
 - Returns a single post with its rendered Svelte component
 - Returns `undefined` if not found or not published
 
@@ -164,8 +165,8 @@ The `[slug]/+page.ts` exports an `entries()` function that tells SvelteKit which
 
 ```typescript
 export const entries: EntryGenerator = async () => {
-  const posts = await getPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+	const posts = await getPosts();
+	return posts.map((post) => ({ slug: post.slug }));
 };
 ```
 
@@ -192,9 +193,11 @@ Displays a work experience entry with optional multi-role timeline.
 ```
 
 **Props:**
+
 - `experience: Experience` -- experience data object
 
 **Features:**
+
 - Company name, position, location, website link
 - Multi-role timeline with dot indicators (for career progression)
 - Single-role simple layout (fallback)
@@ -208,9 +211,11 @@ Displays a project in the portfolio grid.
 ```
 
 **Props:**
+
 - `project: Project` -- project data object
 
 **Features:**
+
 - Folder icon, project name, period badge
 - External link icon (only if website URL exists)
 - Hover effects with amber accent
@@ -220,13 +225,15 @@ Displays a project in the portfolio grid.
 Displays a skill category with keyword badges.
 
 ```svelte
-<SkillCard skill={skill} />
+<SkillCard {skill} />
 ```
 
 **Props:**
+
 - `skill: Skill` -- skill data object
 
 **Features:**
+
 - Category name heading
 - Keyword tags in a flex-wrap layout
 - Hover effects on individual keyword badges
@@ -236,13 +243,15 @@ Displays a skill category with keyword badges.
 Displays a blog post preview in the listing grid.
 
 ```svelte
-<BlogCard post={post} />
+<BlogCard {post} />
 ```
 
 **Props:**
+
 - `post: BlogPost` -- blog post metadata
 
 **Features:**
+
 - Date with calendar icon
 - Title, description, tags (max 3 shown)
 - Links to `/blog/{slug}`
@@ -264,11 +273,11 @@ src/content/blog/my-new-post.svx
 
 ```yaml
 ---
-title: "My New Post"
-slug: "my-new-post"
-description: "A brief description."
-date: "2026-05-03"
-tags: ["Topic1", "Topic2"]
+title: 'My New Post'
+slug: 'my-new-post'
+description: 'A brief description.'
+date: '2026-05-03'
+tags: ['Topic1', 'Topic2']
 published: true
 ---
 ```
@@ -282,6 +291,7 @@ published: true
 ### Updating Resume Data
 
 Edit `src/lib/data/resume.ts` directly. Changes propagate to:
+
 - Home page hero section (via `hero.ts`)
 - About page (experience, skills, languages)
 - Projects page

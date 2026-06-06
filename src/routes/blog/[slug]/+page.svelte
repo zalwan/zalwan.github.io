@@ -1,16 +1,19 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { ArrowLeft, Calendar, Tag } from '@lucide/svelte';
 
 	const siteUrl = 'https://zalwan.github.io';
 
 	let { data } = $props();
-	const { post } = data;
+	const post = $derived(data.post);
 
-	const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric'
-	});
+	const formattedDate = $derived(
+		new Date(post.date).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	);
 </script>
 
 <svelte:head>
@@ -30,7 +33,7 @@
 <article class="py-12">
 	<!-- Back link -->
 	<a
-		href="/blog"
+		href={resolve('/blog')}
 		class="mb-8 inline-flex items-center gap-2 text-sm text-white/50 transition hover:text-amber-400"
 	>
 		<ArrowLeft class="h-4 w-4" />
@@ -51,7 +54,7 @@
 		<p class="mb-6 text-lg text-white/60">{post.description}</p>
 
 		<div class="flex flex-wrap gap-2">
-			{#each post.tags as tag}
+			{#each post.tags as tag (tag)}
 				<span
 					class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/50"
 				>

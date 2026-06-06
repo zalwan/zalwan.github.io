@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { ArrowUpRight } from '@lucide/svelte';
 	import data from '$lib/data';
 
 	const { navItems } = data.navbar;
-	$: currentPath = $page.url.pathname;
+	const currentPath = $derived(page.url.pathname);
 </script>
 
 <header
@@ -22,11 +23,11 @@
 		</div>
 	</div>
 	<nav class="flex items-center gap-4 text-sm text-white/75 sm:gap-6">
-		{#each navItems.filter((item) => !item.disabled) as item}
+		{#each navItems.filter((item) => !item.disabled) as item (item.href)}
 			<a
 				class="transition hover:text-white"
 				class:text-amber-300={currentPath === item.href}
-				href={item.href}
+				href={resolve(item.href)}
 				aria-current={currentPath === item.href ? 'page' : undefined}
 			>
 				<span class="sm:hidden">{item.emoji}</span>

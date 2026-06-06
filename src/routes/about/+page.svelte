@@ -41,7 +41,7 @@
 	<section>
 		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Experience</h2>
 		<div class="mx-auto max-w-3xl space-y-6">
-			{#each experience as exp}
+			{#each experience as exp (exp.id)}
 				<ExperienceCard experience={exp} />
 			{/each}
 		</div>
@@ -51,7 +51,7 @@
 	<section>
 		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Skills</h2>
 		<div class="mx-auto grid max-w-3xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each skills as skill}
+			{#each skills as skill (skill.id)}
 				<SkillCard {skill} />
 			{/each}
 		</div>
@@ -61,7 +61,7 @@
 	<section>
 		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Languages</h2>
 		<div class="mx-auto flex max-w-3xl flex-wrap justify-center gap-6">
-			{#each languages as lang}
+			{#each languages as lang (lang.id)}
 				<div
 					class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
 				>

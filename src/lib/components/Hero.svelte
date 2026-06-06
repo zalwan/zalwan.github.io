@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { ExternalLink, Github, Linkedin, MessageCircle, Youtube } from '@lucide/svelte';
+	import { Code, IdCard, MessageCircle, Video } from '@lucide/svelte';
 	import data from '$lib/data';
 	import Logos from './Logos.svelte';
 
 	const { profileData, contactLinks, socialMediaLinks } = data.hero;
-	type IconComponent = typeof Github;
+	type IconComponent = typeof Code;
 	const iconMap: Record<string, IconComponent> = {
-		github: Github,
-		linkedin: Linkedin,
-		youtube: Youtube
+		github: Code,
+		linkedin: IdCard,
+		youtube: Video
 	};
 </script>
 
@@ -28,27 +28,28 @@
 			<p class="mb-8 max-w-xl text-lg text-white/70 lg:text-xl">{profileData.description}</p>
 
 			<div class="flex w-full flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-				{#each contactLinks as contact}
+				{#each contactLinks as contact (contact.url)}
 					<a
 						class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-3 text-center text-sm font-semibold text-white transition hover:border-amber-400/60 hover:bg-amber-400/10"
 						href={contact.url}
 						target="_blank"
-						rel="noreferrer"
+						rel="external noreferrer"
 					>
 						<MessageCircle class="h-4 w-4" aria-hidden="true" />
 						{contact.text}
 					</a>
 				{/each}
-				{#each socialMediaLinks as social}
+				{#each socialMediaLinks as social (social.id)}
+					{@const SocialIcon = iconMap[social.id]}
 					<a
 						class="hidden rounded-full border border-white/20 p-4 text-white transition hover:border-amber-400/60 hover:bg-amber-400/10 lg:inline-flex"
 						href={social.url}
 						target="_blank"
-						rel="noreferrer"
+						rel="external noreferrer"
 						aria-label={social.label}
 					>
-						{#if iconMap[social.id]}
-							<svelte:component this={iconMap[social.id]} class="h-4 w-4" aria-hidden="true" />
+						{#if SocialIcon}
+							<SocialIcon class="h-4 w-4" aria-hidden="true" />
 						{:else}
 							<span class="text-sm font-semibold">{social.label}</span>
 						{/if}

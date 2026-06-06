@@ -37,7 +37,7 @@
 
 	{#if data.posts.length > 0}
 		<div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each data.posts as post}
+			{#each data.posts as post (post.slug)}
 				<BlogCard {post} />
 			{/each}
 		</div>
