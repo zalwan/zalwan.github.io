@@ -21,3 +21,22 @@ You MUST use this tool whenever writing Svelte code before sending it to the use
 
 Generates a Svelte Playground link with the provided code.
 After completing the code, ask the user if they want a playground link. Only call this tool after user confirmation and NEVER if code was written to files in their project.
+
+## Project Workflow
+
+- Use `pnpm` for all package and script operations.
+- For Svelte/SvelteKit implementation work, read nearby components and data modules before editing.
+- Prefer Svelte 5 runes and existing local patterns; avoid unrelated architecture changes.
+- Validate code changes with:
+  - `pnpm run check`
+  - `pnpm run lint`
+  - `pnpm run test:e2e`
+  - `pnpm run build`
+- If the dev browser renders blank after dependency upgrades, restart Vite with `pnpm run dev -- --host 127.0.0.1 --force`.
+
+## Codex Setup
+
+- Workspace MCP config lives in `.vscode/mcp.json`.
+- The Svelte MCP and Playwright MCP servers are launched through `.vscode/mcp-*.js` wrappers so the setup works from WSL/Linux and Windows.
+- Project-specific Codex skill lives in `.codex/skills/zalwan-sveltekit`.
+- Playwright browser smoke tests live in `tests/e2e`.

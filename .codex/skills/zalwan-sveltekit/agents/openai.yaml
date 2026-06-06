@@ -1,0 +1,8 @@
+interface:
+  display_name: 'Zalwan SvelteKit'
+  short_description: 'Portfolio workflow and verification guide'
+  brand_color: '#F59E0B'
+  default_prompt: 'Use $zalwan-sveltekit to update the portfolio safely and run the expected verification commands.'
+
+policy:
+  allow_implicit_invocation: true

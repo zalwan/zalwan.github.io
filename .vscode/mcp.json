@@ -1,8 +1,12 @@
 {
 	"servers": {
 		"svelte": {
-			"command": "npx",
-			"args": ["-y", "@sveltejs/mcp"]
+			"command": "node",
+			"args": [".vscode/mcp-svelte.js"]
+		},
+		"playwright": {
+			"command": "node",
+			"args": [".vscode/mcp-playwright.js"]
 		}
 	}
 }

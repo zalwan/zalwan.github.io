@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_site:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -24,7 +24,16 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Validate
+        run: |
+          pnpm run check
+          pnpm run lint
+          pnpm run test:e2e
 
       - name: Build
         env:
