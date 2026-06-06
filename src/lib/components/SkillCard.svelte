@@ -4,17 +4,19 @@
 	let { skill }: { skill: Skill } = $props();
 </script>
 
-<div
-	class="rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
->
-	<h3 class="mb-4 text-base font-semibold text-white">{skill.name}</h3>
-	<div class="flex flex-wrap gap-2">
+<article class="surface-card skill-card">
+	<h3 class="display-sm">{skill.name}</h3>
+	<div class="tag-list">
 		{#each skill.keywords as keyword (keyword)}
-			<span
-				class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 transition hover:border-amber-400/30 hover:text-amber-300"
-			>
-				{keyword}
-			</span>
+			<span class="tag">{keyword}</span>
 		{/each}
 	</div>
-</div>
+</article>
+
+<style>
+	.skill-card {
+		display: grid;
+		gap: var(--space-lg);
+		padding: var(--space-lg);
+	}
+</style>

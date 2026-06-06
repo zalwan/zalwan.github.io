@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Code, IdCard, MessageCircle, Video } from '@lucide/svelte';
+	import { ButtonLink } from '$lib';
 	import data from '$lib/data';
 	import Logos from './Logos.svelte';
 
@@ -12,102 +13,132 @@
 	};
 </script>
 
-<section class="flex w-full flex-col items-center justify-center py-12">
-	<div class="grid items-center gap-8 lg:grid-cols-2">
-		<div
-			class="order-last flex flex-col items-center text-center lg:order-first lg:items-start lg:text-left"
-		>
-			<p
-				class="hidden items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-sm font-semibold tracking-[0.2em] text-amber-100 uppercase lg:inline-flex"
-			>
-				{profileData.badge}
-			</p>
+<section class="hero-photo-band">
+	<img
+		class="hero-photo-band__image"
+		src={profileData.image.src}
+		alt={profileData.image.alt}
+		width="800"
+		height="800"
+		loading="eager"
+	/>
+	<div class="hero-photo-band__shade" aria-hidden="true"></div>
 
-			<h1 class="mt-6 text-4xl leading-tight font-bold lg:text-6xl">{profileData.heading}</h1>
-			<h2 class="mb-6 text-4xl font-bold text-amber-500 lg:text-6xl">{profileData.fullName}</h2>
-			<p class="mb-8 max-w-xl text-lg text-white/70 lg:text-xl">{profileData.description}</p>
+	<div class="container hero-photo-band__content">
+		<p class="eyebrow reveal">{profileData.badge}</p>
+		<h1 class="display-xl reveal">{profileData.fullName}</h1>
+		<p class="copy-strong hero-photo-band__lead reveal">{profileData.description}</p>
 
-			<div class="flex w-full flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-				{#each contactLinks as contact (contact.url)}
-					<a
-						class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-3 text-center text-sm font-semibold text-white transition hover:border-amber-400/60 hover:bg-amber-400/10"
-						href={contact.url}
-						target="_blank"
-						rel="external noreferrer"
-					>
-						<MessageCircle class="h-4 w-4" aria-hidden="true" />
-						{contact.text}
-					</a>
-				{/each}
+		<div class="hero-photo-band__actions reveal">
+			{#each contactLinks as contact (contact.url)}
+				<ButtonLink href={contact.url} external>
+					<MessageCircle class="cta-icon" aria-hidden="true" />
+					{contact.text}
+				</ButtonLink>
+			{/each}
+
+			<div class="hero-photo-band__social" aria-label="Social links">
 				{#each socialMediaLinks as social (social.id)}
 					{@const SocialIcon = iconMap[social.id]}
-					<a
-						class="hidden rounded-full border border-white/20 p-4 text-white transition hover:border-amber-400/60 hover:bg-amber-400/10 lg:inline-flex"
-						href={social.url}
-						target="_blank"
-						rel="external noreferrer"
-						aria-label={social.label}
-					>
+					<ButtonLink href={social.url} external variant="icon" ariaLabel={social.label}>
 						{#if SocialIcon}
-							<SocialIcon class="h-4 w-4" aria-hidden="true" />
+							<SocialIcon class="social-icon" aria-hidden="true" />
 						{:else}
-							<span class="text-sm font-semibold">{social.label}</span>
+							<span class="caption">{social.label}</span>
 						{/if}
-					</a>
+					</ButtonLink>
 				{/each}
-			</div>
-		</div>
-
-		<div class="flex flex-col items-center gap-6">
-			<p
-				class="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-sm font-semibold tracking-[0.2em] text-amber-100 uppercase lg:hidden"
-			>
-				<span class="inline-flex h-2.5 w-2.5 rounded-full bg-amber-300" aria-hidden="true"></span>
-				{profileData.badge}
-			</p>
-			<div
-				class="relative mx-auto max-h-80 overflow-hidden rounded-full border-4 border-amber-700/40 bg-amber-600 shadow-2xl shadow-amber-700 lg:max-h-96"
-			>
-				<img
-					class="max-h-80 w-full object-contain lg:max-h-96"
-					src={profileData.image.src}
-					alt={profileData.image.alt}
-					width="600"
-					height="400"
-					loading="eager"
-				/>
-				<svg
-					class="pointer-events-none absolute top-0 left-0 h-full w-full opacity-30"
-					aria-hidden="true"
-				>
-					<defs>
-						<linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stop-color="#ffffff" stop-opacity="0">
-								<animate attributeName="offset" values="-1; 2" dur="3s" repeatCount="indefinite" />
-							</stop>
-							<stop offset="25%" stop-color="#ffffff" stop-opacity="0.5">
-								<animate
-									attributeName="offset"
-									values="-0.75; 2.25"
-									dur="3s"
-									repeatCount="indefinite"
-								/>
-							</stop>
-							<stop offset="50%" stop-color="#ffffff" stop-opacity="0">
-								<animate
-									attributeName="offset"
-									values="-0.5; 2.5"
-									dur="3s"
-									repeatCount="indefinite"
-								/>
-							</stop>
-						</linearGradient>
-					</defs>
-					<rect width="600" height="400" fill="url(#shimmer)" />
-				</svg>
 			</div>
 		</div>
 	</div>
-
-	<Logos />
 </section>
+
+<Logos />
+
+<style>
+	.hero-photo-band {
+		position: relative;
+		min-height: calc(100vh - var(--nav-height));
+		display: grid;
+		align-items: end;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-hairline);
+		background: var(--color-canvas);
+	}
+
+	.hero-photo-band__image {
+		position: absolute;
+		inset-block: auto 0;
+		inset-inline-end: 0;
+		width: min(58rem, 82vw);
+		height: min(58rem, 82vh);
+		object-fit: contain;
+		object-position: bottom right;
+		opacity: 0.72;
+	}
+
+	.hero-photo-band__shade {
+		position: absolute;
+		inset: 0;
+		background: rgb(0 0 0 / 0.5);
+	}
+
+	.hero-photo-band__content {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: var(--space-lg);
+		padding-block: var(--space-section);
+	}
+
+	.hero-photo-band__lead {
+		max-width: 44rem;
+		font-size: 1.125rem;
+	}
+
+	.hero-photo-band__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.hero-photo-band__social {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+	}
+
+	:global(.cta-icon),
+	:global(.social-icon) {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	@media (max-width: 47.9375rem) {
+		.hero-photo-band {
+			min-height: 42rem;
+		}
+
+		.hero-photo-band__image {
+			width: 100vw;
+			height: 28rem;
+			opacity: 0.42;
+			object-position: bottom center;
+		}
+
+		.hero-photo-band__content {
+			align-content: end;
+			padding-block: var(--space-xxl);
+		}
+
+		.hero-photo-band__actions,
+		.hero-photo-band__social {
+			width: 100%;
+		}
+
+		.hero-photo-band__social {
+			justify-content: center;
+		}
+	}
+</style>

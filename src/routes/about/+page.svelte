@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { data, ExperienceCard, SkillCard } from '$lib';
-	import { Globe } from '@lucide/svelte';
+	import { data, ExperienceCard, SectionHeader, SkillCard } from '$lib';
 
 	const siteUrl = 'https://zalwan.github.io';
 	const pageTitle = 'About | Zalwan Studio';
 	const pageDescription =
-		'Learn about Rizal Suryawan — Software Engineer with 5+ years of experience building scalable web and mobile applications.';
+		'Learn about Rizal Suryawan, a software engineer building scalable web and mobile applications.';
 
 	const { summary, experience, skills, languages } = data.resume;
 </script>
@@ -23,59 +22,70 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<div class="space-y-16 py-12">
-	<!-- Summary -->
-	<section class="flex flex-col items-center text-center">
-		<p
-			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
-		>
-			About Me
-		</p>
-		<h1 class="mb-6 text-4xl font-bold text-white md:text-5xl">Rizal Suryawan</h1>
-		<p class="max-w-3xl text-lg leading-relaxed text-white/70 md:text-xl">
-			{summary}
-		</p>
+<div class="container section-stack">
+	<section class="section">
+		<SectionHeader eyebrow="About" title="Rizal Suryawan" description={summary} />
 	</section>
 
-	<!-- Experience -->
-	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Experience</h2>
-		<div class="mx-auto max-w-3xl space-y-6">
+	<section class="section">
+		<SectionHeader eyebrow="Career" title="Experience" tag="h2" />
+		<div class="list-stack">
 			{#each experience as exp (exp.id)}
 				<ExperienceCard experience={exp} />
 			{/each}
 		</div>
 	</section>
 
-	<!-- Skills -->
-	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Skills</h2>
-		<div class="mx-auto grid max-w-3xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+	<section class="section">
+		<SectionHeader eyebrow="Capabilities" title="Skills" tag="h2" />
+		<div class="card-grid card-grid--three">
 			{#each skills as skill (skill.id)}
 				<SkillCard {skill} />
 			{/each}
 		</div>
 	</section>
 
-	<!-- Languages -->
-	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Languages</h2>
-		<div class="mx-auto flex max-w-3xl flex-wrap justify-center gap-6">
+	<section class="section">
+		<SectionHeader eyebrow="Languages" title="Languages" tag="h2" />
+		<div class="card-grid card-grid--two">
 			{#each languages as lang (lang.id)}
-				<div
-					class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
-				>
-					<div
-						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
-					>
-						<Globe class="h-5 w-5" />
-					</div>
-					<div>
-						<p class="text-sm font-semibold text-white">{lang.language}</p>
-						<p class="text-xs text-white/50">{lang.fluency}</p>
-					</div>
-				</div>
+				<article class="surface-card language-card">
+					<p class="display-sm">{lang.language}</p>
+					<p class="date-label">{lang.fluency}</p>
+				</article>
 			{/each}
 		</div>
 	</section>
 </div>
+
+<style>
+	.list-stack {
+		width: min(100%, 52rem);
+		margin-inline: auto;
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.card-grid {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.language-card {
+		display: grid;
+		gap: var(--space-xs);
+		padding: var(--space-lg);
+	}
+
+	@media (min-width: 48rem) {
+		.card-grid--two {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.card-grid--three {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>

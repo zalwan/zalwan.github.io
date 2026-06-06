@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { data } from '$lib';
-	import { Mail, Phone, MapPin, Globe, IdCard, MessageCircle, ArrowUpRight } from '@lucide/svelte';
+	import { resolve } from '$app/paths';
+	import { ButtonLink, data, SectionHeader } from '$lib';
+	import { ArrowUpRight, IdCard, Mail, MapPin, MessageCircle, Phone, Globe } from '@lucide/svelte';
 
 	const siteUrl = 'https://zalwan.github.io';
 	const pageTitle = 'Contact | Zalwan Studio';
@@ -8,37 +9,43 @@
 		'Get in touch with Rizal Suryawan for collaborations or project inquiries.';
 
 	const { basics } = data.resume;
+	const whatsappUrl = `https://wa.me/${basics.phone.replace(/\+/g, '')}?text=Hi%20Rizal,%20I%20found%20your%20web%20and%20would%20like%20to%20connect!`;
 
 	const contactItems = [
 		{
 			icon: Mail,
 			label: 'Email',
 			value: basics.email,
-			href: `mailto:${basics.email}`
+			href: `mailto:${basics.email}`,
+			external: false
 		},
 		{
 			icon: Phone,
 			label: 'Phone',
 			value: basics.phone,
-			href: `https://wa.me/${basics.phone.replace(/\+/g, '')}`
+			href: whatsappUrl,
+			external: true
 		},
 		{
 			icon: MapPin,
 			label: 'Location',
 			value: basics.location,
-			href: ''
+			href: '',
+			external: false
 		},
 		{
 			icon: Globe,
 			label: 'Website',
 			value: basics.website.replace('https://', ''),
-			href: basics.website
+			href: basics.website,
+			external: true
 		},
 		{
 			icon: IdCard,
 			label: 'LinkedIn',
 			value: 'rizal-suryawan',
-			href: basics.linkedin
+			href: basics.linkedin,
+			external: true
 		}
 	];
 </script>
@@ -56,81 +63,118 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<div class="py-12">
-	<div class="mb-12 text-center">
-		<p
-			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
-		>
-			Contact
-		</p>
-		<h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">Let's Connect</h1>
-		<p class="mx-auto max-w-2xl text-lg text-white/60">
-			Feel free to reach out for collaborations, project inquiries, or just to say hello.
-		</p>
-	</div>
+<div class="container section-stack">
+	<section class="section">
+		<SectionHeader
+			eyebrow="Contact"
+			title="Let's Connect"
+			description="Reach out for collaborations, project inquiries, or a focused engineering conversation."
+		/>
 
-	<div class="mx-auto max-w-2xl space-y-4">
-		{#each contactItems as item (item.label)}
-			{@const ContactIcon = item.icon}
-			{#if item.href}
-				<a
-					href={item.href}
-					target="_blank"
-					rel="external noreferrer"
-					class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
-				>
-					<div
-						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
+		<!-- eslint-disable svelte/no-navigation-without-resolve -->
+		<div class="contact-list">
+			{#each contactItems as item (item.label)}
+				{@const ContactIcon = item.icon}
+				{#if item.href}
+					<a
+						href={item.external || !item.href.startsWith('/')
+							? item.href
+							: resolve(item.href as '/')}
+						target={item.external ? '_blank' : undefined}
+						rel={item.external ? 'external noreferrer' : undefined}
+						class="surface-card contact-row"
 					>
-						<ContactIcon class="h-5 w-5" />
+						<span class="icon-frame">
+							<ContactIcon class="contact-row__icon" aria-hidden="true" />
+						</span>
+						<span class="contact-row__content">
+							<span class="caption">{item.label}</span>
+							<span class="title-sm">{item.value}</span>
+						</span>
+						<ArrowUpRight class="contact-row__arrow" aria-hidden="true" />
+					</a>
+				{:else}
+					<div class="surface-card contact-row">
+						<span class="icon-frame">
+							<ContactIcon class="contact-row__icon" aria-hidden="true" />
+						</span>
+						<span class="contact-row__content">
+							<span class="caption">{item.label}</span>
+							<span class="title-sm">{item.value}</span>
+						</span>
 					</div>
-					<div class="min-w-0 flex-1">
-						<p class="text-xs font-medium uppercase tracking-wider text-white/40">{item.label}</p>
-						<p
-							class="truncate text-sm font-semibold text-white group-hover:text-amber-300 transition"
-						>
-							{item.value}
-						</p>
-					</div>
-					<ArrowUpRight
-						class="h-4 w-4 shrink-0 text-white/30 transition group-hover:text-amber-400"
-					/>
-				</a>
-			{:else}
-				<div
-					class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
-				>
-					<div
-						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
-					>
-						<ContactIcon class="h-5 w-5" />
-					</div>
-					<div class="min-w-0 flex-1">
-						<p class="text-xs font-medium uppercase tracking-wider text-white/40">{item.label}</p>
-						<p
-							class="truncate text-sm font-semibold text-white group-hover:text-amber-300 transition"
-						>
-							{item.value}
-						</p>
-					</div>
-				</div>
-			{/if}
-		{/each}
-	</div>
+				{/if}
+			{/each}
+		</div>
+		<!-- eslint-enable svelte/no-navigation-without-resolve -->
 
-	<!-- CTA -->
-	<div class="mt-12 text-center">
-		<a
-			class="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-8 py-4 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/20 hover:border-amber-400/60"
-			href="https://wa.me/{basics.phone.replace(
-				/\+/g,
-				''
-			)}?text=Hi%20Rizal,%20I%20found%20your%20web%20and%20would%20like%20to%20connect!"
-			target="_blank"
-			rel="external noreferrer"
-		>
-			<MessageCircle class="h-4 w-4" />
-			Chat on WhatsApp
-		</a>
-	</div>
+		<div class="contact-cta">
+			<ButtonLink href={whatsappUrl} external>
+				<MessageCircle class="contact-row__icon" aria-hidden="true" />
+				Chat on WhatsApp
+			</ButtonLink>
+		</div>
+	</section>
 </div>
+
+<style>
+	.contact-list {
+		width: min(100%, 42rem);
+		margin-inline: auto;
+		display: grid;
+		gap: var(--space-md);
+	}
+
+	.contact-row {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: var(--space-md);
+		padding: var(--space-lg);
+		text-decoration: none;
+	}
+
+	.contact-row__content {
+		min-width: 0;
+		display: grid;
+		gap: var(--space-xxs);
+	}
+
+	.contact-row__content .title-sm {
+		overflow-wrap: anywhere;
+		text-transform: none;
+	}
+
+	:global(.contact-row__icon),
+	:global(.contact-row__arrow) {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	:global(.contact-row__arrow) {
+		color: var(--color-muted);
+		transition:
+			color var(--transition-fast),
+			transform var(--transition-fast);
+	}
+
+	.contact-row:hover :global(.contact-row__arrow) {
+		color: var(--color-primary);
+		transform: translate(1px, -1px);
+	}
+
+	.contact-cta {
+		display: flex;
+		justify-content: center;
+	}
+
+	@media (max-width: 47.9375rem) {
+		.contact-row {
+			grid-template-columns: auto minmax(0, 1fr);
+		}
+
+		:global(.contact-row__arrow) {
+			display: none;
+		}
+	}
+</style>

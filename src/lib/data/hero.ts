@@ -1,7 +1,7 @@
 import { summary, basics } from './resume';
 
 export const profileData = {
-	badge: `✨ ${basics.headline}`,
+	badge: basics.headline,
 	heading: "Hello! I'm",
 	fullName: basics.name,
 	description: summary,

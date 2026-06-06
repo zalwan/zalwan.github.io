@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import { page } from '$app/state';
-	import { Footer, Header, MainWrapper, ThemeProvider } from '$lib';
+	import { SiteShell } from '$lib';
 
 	const siteUrl = 'https://zalwan.github.io';
 	const siteName = 'Zalwan Studio';
@@ -29,12 +29,6 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<ThemeProvider>
-	<MainWrapper>
-		<div class="grid min-h-screen grid-rows-[auto_1fr_auto] gap-10">
-			<Header />
-			<main>{@render children()}</main>
-			<Footer />
-		</div>
-	</MainWrapper>
-</ThemeProvider>
+<SiteShell>
+	{@render children()}
+</SiteShell>

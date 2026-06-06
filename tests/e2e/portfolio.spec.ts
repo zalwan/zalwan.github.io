@@ -5,8 +5,7 @@ test.describe('portfolio smoke checks', () => {
 		await page.goto('/');
 
 		await expect(page).toHaveTitle('Zalwan Studio');
-		await expect(page.getByRole('banner')).toContainText('Zalwan Studio');
-		await expect(page.getByRole('heading', { name: "Hello! I'm" })).toBeVisible();
+		await expect(page.getByRole('banner')).toContainText('Zalwan');
 		await expect(page.getByRole('heading', { name: 'Rizal Suryawan' })).toBeVisible();
 		await expect(page.getByRole('link', { name: 'Chat on WhatsApp' })).toHaveAttribute(
 			'href',

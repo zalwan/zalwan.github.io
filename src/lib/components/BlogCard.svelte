@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { Calendar, ArrowUpRight, Tag } from '@lucide/svelte';
+	import { ArrowUpRight } from '@lucide/svelte';
 	import type { BlogPost } from '$lib/data/blog';
 
 	let { post }: { post: BlogPost } = $props();
@@ -14,34 +14,73 @@
 	);
 </script>
 
-<a
-	href={resolve('/blog/[slug]', { slug: post.slug })}
-	class="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
->
-	<div class="mb-3 flex items-center gap-2 text-xs text-white/40">
-		<Calendar class="h-3.5 w-3.5" />
-		<time datetime={post.date}>{formattedDate}</time>
+<a href={resolve('/blog/[slug]', { slug: post.slug })} class="surface-card article-card">
+	<div class="article-card__meta">
+		<time class="date-label" datetime={post.date}>{formattedDate}</time>
 	</div>
 
-	<h2 class="mb-2 text-lg font-semibold text-white transition group-hover:text-amber-300">
-		{post.title}
-	</h2>
+	<h2 class="display-sm article-card__title">{post.title}</h2>
+	<p class="copy-small article-card__copy">{post.description}</p>
 
-	<p class="mb-4 flex-1 text-sm leading-relaxed text-white/60">
-		{post.description}
-	</p>
-
-	<div class="flex items-center justify-between">
-		<div class="flex flex-wrap gap-1.5">
+	<div class="article-card__footer">
+		<div class="tag-list">
 			{#each post.tags.slice(0, 3) as tag (tag)}
-				<span
-					class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] font-medium text-white/50"
-				>
-					<Tag class="h-2.5 w-2.5" />
-					{tag}
-				</span>
+				<span class="tag">{tag}</span>
 			{/each}
 		</div>
-		<ArrowUpRight class="h-4 w-4 shrink-0 text-white/30 transition group-hover:text-amber-400" />
+		<ArrowUpRight class="article-card__icon" aria-hidden="true" />
 	</div>
 </a>
+
+<style>
+	.article-card {
+		min-height: 100%;
+		display: grid;
+		grid-template-rows: auto auto 1fr auto;
+		gap: var(--space-md);
+		padding: var(--space-lg);
+		text-decoration: none;
+	}
+
+	.article-card__meta {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+	}
+
+	.article-card__title {
+		transition: opacity var(--transition-fast);
+	}
+
+	.article-card:hover .article-card__title {
+		opacity: 0.78;
+	}
+
+	.article-card__copy {
+		color: var(--color-body);
+	}
+
+	.article-card__footer {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-hairline);
+	}
+
+	:global(.article-card__icon) {
+		width: 1rem;
+		height: 1rem;
+		flex: 0 0 auto;
+		color: var(--color-muted);
+		transition:
+			color var(--transition-fast),
+			transform var(--transition-fast);
+	}
+
+	.article-card:hover :global(.article-card__icon) {
+		color: var(--color-primary);
+		transform: translate(1px, -1px);
+	}
+</style>

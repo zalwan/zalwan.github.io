@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BlogCard } from '$lib';
+	import { BlogCard, SectionHeader } from '$lib';
 
 	const siteUrl = 'https://zalwan.github.io';
 	const pageTitle = 'Blog | Zalwan Studio';
@@ -22,26 +22,45 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<div class="py-12">
-	<div class="mb-12 text-center">
-		<p
-			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
-		>
-			Blog
-		</p>
-		<h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">Articles</h1>
-		<p class="mx-auto max-w-2xl text-lg text-white/60">
-			Notes, stories, and insights on AI, mobile development, and engineering career growth.
-		</p>
-	</div>
+<div class="container section-stack">
+	<section class="section">
+		<SectionHeader
+			eyebrow="Journal"
+			title="Articles"
+			description="Notes, stories, and insights on AI, mobile development, and engineering career growth."
+		/>
 
-	{#if data.posts.length > 0}
-		<div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each data.posts as post (post.slug)}
-				<BlogCard {post} />
-			{/each}
-		</div>
-	{:else}
-		<p class="text-center text-white/50">No articles yet. Check back soon.</p>
-	{/if}
+		{#if data.posts.length > 0}
+			<div class="article-grid">
+				{#each data.posts as post (post.slug)}
+					<BlogCard {post} />
+				{/each}
+			</div>
+		{:else}
+			<p class="copy muted empty-state">No articles yet. Check back soon.</p>
+		{/if}
+	</section>
 </div>
+
+<style>
+	.article-grid {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.empty-state {
+		text-align: center;
+	}
+
+	@media (min-width: 48rem) {
+		.article-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.article-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>
