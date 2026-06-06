@@ -1,27 +1,29 @@
 <script lang="ts">
-	import { data, ExperienceCard, SkillCard } from '$lib';
+	import { data, ExperienceCard, Seo, SkillCard } from '$lib';
+	import { breadcrumbJsonLd, personJsonLd, webPageJsonLd } from '$lib/data/site';
 	import { Globe } from '@lucide/svelte';
 
-	const siteUrl = 'https://zalwan.github.io';
-	const pageTitle = 'About | Zalwan Studio';
+	const pageTitle = 'About Rizal Suryawan';
 	const pageDescription =
-		'Learn about Rizal Suryawan — Software Engineer with 5+ years of experience building scalable web and mobile applications.';
+		'Learn about Rizal Suryawan, a Principal Engineer with 5+ years of experience building scalable web, mobile, and AI-powered applications.';
 
 	const { summary, experience, skills, languages } = data.resume;
 </script>
 
-<svelte:head>
-	<title>{pageTitle}</title>
-	<meta name="description" content={pageDescription} />
-	<meta property="og:title" content={pageTitle} />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={pageTitle} />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
-</svelte:head>
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	path="/about"
+	type="profile"
+	jsonLd={[
+		personJsonLd,
+		webPageJsonLd(pageTitle, pageDescription, '/about'),
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'About', path: '/about' }
+		])
+	]}
+/>
 
 <div class="space-y-12 py-8 sm:space-y-14 sm:py-10 lg:space-y-16 lg:py-12">
 	<!-- Summary -->

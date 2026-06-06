@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { data } from '$lib';
+	import { data, Seo } from '$lib';
+	import { absoluteUrl, breadcrumbJsonLd, webPageJsonLd } from '$lib/data/site';
 	import { Mail, Phone, MapPin, Globe, IdCard, MessageCircle, ArrowUpRight } from '@lucide/svelte';
 
-	const siteUrl = 'https://zalwan.github.io';
-	const pageTitle = 'Contact | Zalwan Studio';
+	const pageTitle = 'Contact';
 	const pageDescription =
-		'Get in touch with Rizal Suryawan for collaborations or project inquiries.';
+		'Contact Rizal Suryawan for collaborations, frontend architecture, full-stack engineering, AI product work, or project inquiries.';
 
 	const { basics } = data.resume;
 
@@ -41,20 +41,37 @@
 			href: basics.linkedin
 		}
 	];
+
+	const contactJsonLd = {
+		'@context': 'https://schema.org',
+		'@type': 'ContactPage',
+		name: 'Contact Rizal Suryawan',
+		description: pageDescription,
+		url: absoluteUrl('/contact'),
+		mainEntity: {
+			'@type': 'Person',
+			name: basics.name,
+			email: basics.email,
+			telephone: basics.phone,
+			url: absoluteUrl('/'),
+			sameAs: [basics.website, basics.linkedin]
+		}
+	};
 </script>
 
-<svelte:head>
-	<title>{pageTitle}</title>
-	<meta name="description" content={pageDescription} />
-	<meta property="og:title" content={pageTitle} />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={pageTitle} />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
-</svelte:head>
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	path="/contact"
+	jsonLd={[
+		webPageJsonLd(pageTitle, pageDescription, '/contact'),
+		contactJsonLd,
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'Contact', path: '/contact' }
+		])
+	]}
+/>
 
 <div class="py-12">
 	<div class="mb-12 text-center">

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { Seo } from '$lib';
+	import { articleJsonLd, breadcrumbJsonLd } from '$lib/data/site';
 	import { ArrowLeft, Calendar, Tag } from '@lucide/svelte';
-
-	const siteUrl = 'https://zalwan.github.io';
 
 	let { data } = $props();
 	const post = $derived(data.post);
@@ -16,19 +16,23 @@
 	);
 </script>
 
-<svelte:head>
-	<title>{post.title} | Zalwan Studio</title>
-	<meta name="description" content={post.description} />
-	<meta property="og:title" content={post.title} />
-	<meta property="og:description" content={post.description} />
-	<meta property="og:type" content="article" />
-	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
-	<meta property="article:published_time" content={post.date} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={post.title} />
-	<meta name="twitter:description" content={post.description} />
-	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
-</svelte:head>
+<Seo
+	title={post.title}
+	description={post.description}
+	path={`/blog/${post.slug}`}
+	type="article"
+	publishedTime={post.date}
+	modifiedTime={post.date}
+	tags={post.tags}
+	jsonLd={[
+		articleJsonLd(post),
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'Articles', path: '/blog' },
+			{ name: post.title, path: `/blog/${post.slug}` }
+		])
+	]}
+/>
 
 <article class="py-12">
 	<!-- Back link -->
