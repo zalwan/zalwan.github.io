@@ -19,8 +19,7 @@ jobs:
 
       - name: Install pnpm
         run: |
-          corepack enable
-          corepack prepare pnpm@11.5.2 --activate
+          npm install --global "$(node -p "require('./package.json').packageManager")"
           pnpm --version
 
       - name: Install dependencies
