@@ -5,16 +5,20 @@
 	let { project }: { project: Project } = $props();
 </script>
 
-<div class="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]">
+<div
+	class="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
+>
 	<div class="mb-3 flex items-start justify-between gap-3">
-		<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400">
+		<div
+			class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
+		>
 			<Folder class="h-5 w-5" />
 		</div>
 		{#if project.website}
 			<a
 				href={project.website}
 				target="_blank"
-				rel="noreferrer"
+				rel="external noreferrer"
 				class="shrink-0 rounded-lg p-2 text-white/40 transition hover:bg-white/10 hover:text-amber-400"
 				aria-label="Visit {project.name}"
 			>

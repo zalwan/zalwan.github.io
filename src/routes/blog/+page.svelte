@@ -1,26 +1,43 @@
 <script lang="ts">
-	import { BlogCard } from '$lib';
+	import { BlogCard, Seo } from '$lib';
+	import { absoluteUrl, breadcrumbJsonLd, webPageJsonLd } from '$lib/data/site';
 
-	const siteUrl = 'https://zalwan.github.io';
-	const pageTitle = 'Blog | Zalwan Studio';
+	const pageTitle = 'Articles';
 	const pageDescription =
-		'Notes, stories, and insights on AI, mobile development, and engineering career growth.';
+		'Articles by Rizal Suryawan on AI agents, mobile development, frontend architecture, and engineering career growth.';
 
 	let { data } = $props();
+
+	const blogJsonLd = $derived({
+		'@context': 'https://schema.org',
+		'@type': 'Blog',
+		name: 'Zalwan Studio Articles',
+		description: pageDescription,
+		url: absoluteUrl('/blog'),
+		blogPost: data.posts.map((post) => ({
+			'@type': 'BlogPosting',
+			headline: post.title,
+			description: post.description,
+			datePublished: post.date,
+			url: absoluteUrl(`/blog/${post.slug}`)
+		}))
+	});
 </script>
 
-<svelte:head>
-	<title>{pageTitle}</title>
-	<meta name="description" content={pageDescription} />
-	<meta property="og:title" content={pageTitle} />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={pageTitle} />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
-</svelte:head>
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	path="/blog"
+	tags={['AI', 'Mobile Development', 'Engineering Leadership']}
+	jsonLd={[
+		webPageJsonLd(pageTitle, pageDescription, '/blog'),
+		blogJsonLd,
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'Articles', path: '/blog' }
+		])
+	]}
+/>
 
 <div class="py-12">
 	<div class="mb-12 text-center">
@@ -37,7 +54,7 @@
 
 	{#if data.posts.length > 0}
 		<div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each data.posts as post}
+			{#each data.posts as post (post.slug)}
 				<BlogCard {post} />
 			{/each}
 		</div>

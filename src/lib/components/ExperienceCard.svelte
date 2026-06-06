@@ -4,13 +4,17 @@
 
 	let { experience }: { experience: Experience } = $props();
 
-	const hasMultipleRoles = experience.roles.length > 1;
+	const hasMultipleRoles = $derived(experience.roles.length > 1);
 </script>
 
-<div class="group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]">
+<div
+	class="group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
+>
 	<div class="mb-4 flex items-start justify-between gap-3">
 		<div class="flex items-start gap-3">
-			<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400">
+			<div
+				class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
+			>
 				<Briefcase class="h-5 w-5" />
 			</div>
 			<div>
@@ -27,7 +31,7 @@
 			<a
 				href={experience.website}
 				target="_blank"
-				rel="noreferrer"
+				rel="external noreferrer"
 				class="shrink-0 rounded-lg p-2 text-white/40 transition hover:bg-white/10 hover:text-amber-400"
 				aria-label="Visit {experience.company} website"
 			>
@@ -38,9 +42,11 @@
 
 	{#if hasMultipleRoles}
 		<div class="ml-5 border-l border-white/10 pl-5">
-			{#each experience.roles as role, i}
+			{#each experience.roles as role, i (role.id)}
 				<div class="relative pb-6 {i === experience.roles.length - 1 ? 'pb-0' : ''}">
-					<div class="absolute -left-[1.625rem] top-1 h-2.5 w-2.5 rounded-full border-2 border-amber-400 bg-slate-950"></div>
+					<div
+						class="absolute -left-[1.625rem] top-1 h-2.5 w-2.5 rounded-full border-2 border-amber-400 bg-slate-950"
+					></div>
 					<p class="text-sm font-semibold text-white">{role.position}</p>
 					<p class="mb-2 text-xs text-white/50">{role.period}</p>
 					<p class="text-sm leading-relaxed text-white/60">{role.description}</p>

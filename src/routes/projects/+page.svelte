@@ -1,26 +1,27 @@
 <script lang="ts">
-	import { data, ProjectCard } from '$lib';
+	import { data, ProjectCard, Seo } from '$lib';
+	import { breadcrumbJsonLd, projectCollectionJsonLd, webPageJsonLd } from '$lib/data/site';
 
-	const siteUrl = 'https://zalwan.github.io';
-	const pageTitle = 'Projects | Zalwan Studio';
+	const pageTitle = 'Projects';
 	const pageDescription =
-		'Explore projects by Rizal Suryawan — AI agents, mobile apps, web platforms, and more.';
+		'Explore projects by Rizal Suryawan across AI agents, mobile apps, web platforms, developer tools, and sustainability technology.';
 
 	const { projects } = data.resume;
 </script>
 
-<svelte:head>
-	<title>{pageTitle}</title>
-	<meta name="description" content={pageDescription} />
-	<meta property="og:title" content={pageTitle} />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content={`${siteUrl}/img/hero-img.png`} />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={pageTitle} />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
-</svelte:head>
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	path="/projects"
+	jsonLd={[
+		webPageJsonLd(pageTitle, pageDescription, '/projects'),
+		projectCollectionJsonLd,
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'Projects', path: '/projects' }
+		])
+	]}
+/>
 
 <div class="py-12">
 	<div class="mb-12 text-center">
@@ -37,7 +38,7 @@
 	</div>
 
 	<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-		{#each projects as project}
+		{#each projects as project (project.id)}
 			<ProjectCard {project} />
 		{/each}
 	</div>

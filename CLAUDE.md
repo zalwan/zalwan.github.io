@@ -82,12 +82,14 @@ static/
 ## Architecture Patterns
 
 ### Component Conventions
+
 - All components are in `src/lib/components/` and exported via `src/lib/index.ts`
 - Import components from `$lib` (e.g., `import { Hero, ExperienceCard } from '$lib'`)
 - Components use Svelte 5 runes: `$props()` for props, snippet `{@render children()}` for slots
 - TypeScript is used in all `<script lang="ts">` blocks
 
 ### Data Layer
+
 - Static data lives in `src/lib/data/` with typed exports
 - Data modules are grouped by feature (hero, logo, navbar, resume, blog)
 - All data is re-exported through `src/lib/data/index.ts` and `src/lib/index.ts`
@@ -96,12 +98,14 @@ static/
 - Blog data (`blog.ts`) uses `import.meta.glob` to scan `.svx` files at build time
 
 ### Resume Data Flow
+
 - `resume.json` (source) -> `src/lib/data/resume.ts` (typed data module)
 - `hero.ts` imports `summary` and `basics` from `resume.ts` (single source of truth)
 - Pages import from `data.resume` for experience, projects, skills, languages
 - Contact page sources email, phone, location, website, LinkedIn from `resume.basics`
 
 ### Blog System
+
 - Blog posts are `.svx` files in `src/content/blog/` with YAML frontmatter
 - Required frontmatter: `title`, `slug`, `description`, `date`, `tags`, `published`
 - `blog.ts` provides `getPosts()` (sorted by date) and `getPost(slug)` functions
@@ -110,6 +114,7 @@ static/
 - Blog post pages use `@tailwindcss/typography` (`prose`) for article styling
 
 ### Styling
+
 - Tailwind CSS v4 with CSS-first configuration (no `tailwind.config.js`)
 - Plugins loaded via `@plugin` directive in `layout.css`: `@tailwindcss/forms`, `@tailwindcss/typography`
 - Dark theme with slate/black gradient background (set in ThemeProvider)
@@ -118,6 +123,7 @@ static/
 - Blog post pages use `prose prose-invert prose-amber` for markdown content
 
 ### Routing
+
 - File-based routing via SvelteKit
 - Pages: `/`, `/about`, `/blog`, `/blog/[slug]`, `/projects`, `/contact`
 - All pages are prerendered (static site generation)

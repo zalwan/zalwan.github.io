@@ -1,3 +1,5 @@
+import type { Component } from 'svelte';
+
 export interface BlogPost {
 	title: string;
 	slug: string;
@@ -8,12 +10,12 @@ export interface BlogPost {
 }
 
 export interface BlogPostWithContent extends BlogPost {
-	content: ConstructorOfATypedSvelteComponent;
+	content: Component;
 }
 
 type GlobEntry = {
 	metadata: BlogPost;
-	default: ConstructorOfATypedSvelteComponent;
+	default: Component;
 };
 
 export async function getPosts(): Promise<BlogPost[]> {

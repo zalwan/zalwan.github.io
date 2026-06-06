@@ -194,8 +194,7 @@ export const projects: Project[] = [
 		name: 'Telexindo Company Profile',
 		period: '2022',
 		website: 'https://telexindo.com/',
-		description:
-			'Create a custom PHP-based WordPress theme for a company profile landing page.'
+		description: 'Create a custom PHP-based WordPress theme for a company profile landing page.'
 	}
 ];
 
@@ -227,14 +226,7 @@ export const skills: Skill[] = [
 	{
 		id: 'mobile',
 		name: 'Mobile Development',
-		keywords: [
-			'Flutter',
-			'Bloc',
-			'Provider',
-			'Cross-platform',
-			'Mobile UI',
-			'REST Integration'
-		]
+		keywords: ['Flutter', 'Bloc', 'Provider', 'Cross-platform', 'Mobile UI', 'REST Integration']
 	}
 ];
 
