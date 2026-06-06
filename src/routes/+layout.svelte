@@ -31,7 +31,7 @@
 
 <ThemeProvider>
 	<MainWrapper>
-		<div class="grid min-h-screen grid-rows-[auto_1fr_auto] gap-10">
+		<div class="grid min-h-screen grid-rows-[auto_1fr_auto] gap-6 md:gap-10">
 			<Header />
 			<main>{@render children()}</main>
 			<Footer />

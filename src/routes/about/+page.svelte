@@ -23,24 +23,24 @@
 	<meta name="twitter:image" content={`${siteUrl}/img/hero-img.png`} />
 </svelte:head>
 
-<div class="space-y-16 py-12">
+<div class="space-y-12 py-8 sm:space-y-14 sm:py-10 lg:space-y-16 lg:py-12">
 	<!-- Summary -->
 	<section class="flex flex-col items-center text-center">
 		<p
-			class="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100"
+			class="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-amber-100 sm:px-4 sm:tracking-[0.2em]"
 		>
 			About Me
 		</p>
-		<h1 class="mb-6 text-4xl font-bold text-white md:text-5xl">Rizal Suryawan</h1>
-		<p class="max-w-3xl text-lg leading-relaxed text-white/70 md:text-xl">
+		<h1 class="mb-5 text-3xl font-bold text-white sm:text-4xl md:text-5xl">Rizal Suryawan</h1>
+		<p class="max-w-3xl text-base leading-relaxed text-white/70 sm:text-lg md:text-xl">
 			{summary}
 		</p>
 	</section>
 
 	<!-- Experience -->
 	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Experience</h2>
-		<div class="mx-auto max-w-3xl space-y-6">
+		<h2 class="mb-6 text-center text-2xl font-bold text-white md:mb-8 md:text-3xl">Experience</h2>
+		<div class="mx-auto max-w-3xl space-y-4 sm:space-y-5 md:space-y-6">
 			{#each experience as exp (exp.id)}
 				<ExperienceCard experience={exp} />
 			{/each}
@@ -49,8 +49,8 @@
 
 	<!-- Skills -->
 	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Skills</h2>
-		<div class="mx-auto grid max-w-3xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+		<h2 class="mb-6 text-center text-2xl font-bold text-white md:mb-8 md:text-3xl">Skills</h2>
+		<div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
 			{#each skills as skill (skill.id)}
 				<SkillCard {skill} />
 			{/each}
@@ -59,11 +59,13 @@
 
 	<!-- Languages -->
 	<section>
-		<h2 class="mb-8 text-center text-2xl font-bold text-white md:text-3xl">Languages</h2>
-		<div class="mx-auto flex max-w-3xl flex-wrap justify-center gap-6">
+		<h2 class="mb-6 text-center text-2xl font-bold text-white md:mb-8 md:text-3xl">Languages</h2>
+		<div
+			class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center lg:gap-6"
+		>
 			{#each languages as lang (lang.id)}
 				<div
-					class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 transition hover:border-amber-400/30 hover:bg-white/[0.07]"
+					class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition hover:border-amber-400/30 hover:bg-white/[0.07] sm:px-5 lg:px-6"
 				>
 					<div
 						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400"
